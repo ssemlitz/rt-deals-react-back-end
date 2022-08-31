@@ -16,6 +16,19 @@ function create(req,res) {
   })
 }
 
+function index(req, res) {
+  Deal.find({})
+  .populate('owner')
+  .then(deals => {
+    res.json(deals)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({err: err.errmsg})
+  })
+}
+
 export {
-  create
+  create,
+  index,
 }
