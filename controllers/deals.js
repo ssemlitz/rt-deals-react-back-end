@@ -28,7 +28,26 @@ function index(req, res) {
   })
 }
 
+function deleteOne(req, res) {
+  Deal.findById(req.params.id)
+  .then(deal => {
+    if (deal.owner._id.equals(req.user.profile)){
+      Deal.findByIdAndDelete(deal._id)
+      .then(deletedDeal => {
+        res.json(deletedDeal)
+      })
+    } else {
+      res.status(401).json({err: "Not Authorized"})
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({err: err.errmsg})
+  })
+}
+
 export {
   create,
   index,
+  deleteOne as delete
 }

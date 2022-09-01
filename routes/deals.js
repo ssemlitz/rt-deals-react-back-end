@@ -8,6 +8,7 @@ router.get('/', dealsCtrl.index)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, dealsCtrl.create)
+router.delete('/:id', checkAuth, dealsCtrl.delete)
 
 export {
   router
