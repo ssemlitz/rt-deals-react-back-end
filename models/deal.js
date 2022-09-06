@@ -8,6 +8,7 @@ const dealSchema = new Schema({
   salePrice: {type: Number, required: true},
   dealLink: {type: String, required: true},
   salePrice: {type: String, required: true},
+  details: {type: String, required: true},
   // image: {type: String, default: '/images/sale.jpg'},
   owner: {type: mongoose.Schema.Types.ObjectId, ref: "Profile"},
   // comments: [commentSchema],

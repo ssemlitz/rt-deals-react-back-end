@@ -46,8 +46,40 @@ function deleteOne(req, res) {
   })
 }
 
+function update(req, res) {
+  Deal.findById(req.params.id)
+  .then(deal => {
+    if (deal.owner._id.equals(req.user.profile)){
+      Deal.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      .populate('owner')
+      .then(updatedDeal => {
+        res.json(updatedDeal)
+      })
+    } else {
+      res.status(401).json({err: err.errmsg})
+    }
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({err: err.errmsg})
+  })
+}
+
+function show(req, res) {
+  Deal.findById(req.params.id)
+  .then(deal => {
+    res.json(deal)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({err: err.errmsg})
+  })
+}
+
 export {
   create,
   index,
-  deleteOne as delete
+  deleteOne as delete,
+  update,
+  show
 }
